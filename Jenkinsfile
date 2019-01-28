@@ -7,7 +7,8 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh './script/test'
+                sh 'chmod 755 /var/jenkins_home/jobs/simple-node-js-app/branches/master/workspace/script/test.sh'
+                sh './script/test.sh'
             }
         }
     }
