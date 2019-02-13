@@ -17,15 +17,13 @@ pipeline {
                 scannerHome = tool 'SonarQubeScanner'
             }
             steps{
+
                 withSonarQubeEnv('SonarQube'){
-                    sh 'whoami'
-                    sh 'ls -lrt ${scannerHome}'
-                    sh 'ls -lrt ${scannerHome}/bin/ '
                     sh '${scannerHome}/bin/sonar-scanner -X'
                 }
-                timeout(time: 10, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
+                // timeout(time: 10, unit: 'MINUTES') {
+                //     waitForQualityGate abortPipeline: true
+                // }
             }
         }
     }
