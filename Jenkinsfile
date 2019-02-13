@@ -19,7 +19,9 @@ pipeline {
             steps{
                 withSonarQubeEnv('Sonar Qube'){
                     sh 'whoami'
-                    sh 'sudo ${scannerHome}/bin/sonar-scanner -X'
+                    sh 'ls -lrt ${scannerHome}'
+                    sh 'ls -lrt ${scannerHome}/bin/ '
+                    sh '${scannerHome}/bin/sonar-scanner -X'
                 }
                 timeout(time: 10, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
