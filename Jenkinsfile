@@ -17,7 +17,7 @@ pipeline {
                 scannerHome = tool 'SonarQubeScanner'
             }
             steps{
-                withSonarQubeEnv('Sonar Qube'){
+                withSonarQubeEnv('SonarQube'){
                     sh 'whoami'
                     sh 'ls -lrt ${scannerHome}'
                     sh 'ls -lrt ${scannerHome}/bin/ '
