@@ -2,6 +2,7 @@ pipeline {
     agent { 
         docker { 
             image 'node:8.10.0'
+            args '-v /var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarQubeScanner:/var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarQubeScanner'
         } 
     }
     stages {
