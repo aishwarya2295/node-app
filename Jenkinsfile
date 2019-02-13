@@ -11,5 +11,18 @@ pipeline {
                 sh './script/test.sh'
             }
         }
+        stage('SonarQube Analysis'){
+            environment {
+                scannerHome = tool 'SonarQubeScanner'
+            }
+            steps{
+                withSonarQubeEnv('Sonar Qube'){
+                    sh '${scannerHome}/bin/sonar-scanner -X'
+                }
+                timeout(time: 10, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
     }
 }
