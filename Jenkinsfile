@@ -2,7 +2,7 @@ pipeline {
     agent { 
         docker { 
             image 'node:8.10.0'
-            args '-v /var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarQubeScanner:/var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarQubeScanner'
+            args '-e JAVA_HOME=/usr/lib/jvm/java-8-oracle -e PATH=$PATH:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/jre/bin -v /usr/bin/docker:/usr/bin/docker -v /var/run/docker.sock:/var/run/docker.sock -v /usr/lib/jvm/java-8-oracle/:/usr/lib/jvm/java-8-oracle/'
         } 
     }
     stages {
@@ -19,11 +19,11 @@ pipeline {
             steps{
 
                 withSonarQubeEnv('SonarQube'){
-                    sh '${scannerHome}/bin/sonar-scanner -X'
+                    sh '${scannerHome}/bin/sonar-scanner'
                 }
-                // timeout(time: 10, unit: 'MINUTES') {
-                //     waitForQualityGate abortPipeline: true
-                // }
+                timeout(time: 10, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
+                }
             }
         }
     }
