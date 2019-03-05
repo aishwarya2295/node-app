@@ -13,6 +13,19 @@ pipeline {
                 sh 'npm install'
             }
         }
+        stage('Download WS Script') {
+            steps{
+                sh 'curl -LJO https://github.com/whitesource/unified-agent-distribution/raw/master/standAlone/wss_agent.sh'
+            }
+        }
+ 
+        stage('Run WS Script') {
+            steps{
+                sh "ls | grep wss_agent.sh"
+                sh "chmod 755 wss_agent.sh"
+                sh 'wss_agent.sh -apiKey 0a3e334c3ba64576810d382cc03d97b12959d72dd96c4356bcae8a1031d0fc4c -c ./wss-unified-agent.config -project DigitalLocker -d ./'
+            }
+        }
         stage('Run Tests'){
             parallel{
                 stage('Test 1') {
